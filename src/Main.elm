@@ -1,23 +1,37 @@
 module Main exposing (..)
 
-import Html exposing (beginnerProgram, text, Html)
+import Html exposing (Html, button, div, program, text)
+import Html.Attributes exposing (class)
 
 
-main : Program Never String a
+main : Program Never Model Msg
 main =
-    beginnerProgram { model = model, view = view, update = update }
+    program { init = init, view = view, update = update, subscriptions = (\m -> Sub.none) }
 
 
-model : String
-model =
-    "Devoxx"
+type Model
+    = NoGame
 
 
-update : a -> String -> String
+type Msg
+    = None
+
+
+init =
+    ( NoGame, Cmd.none )
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model
+    ( model, Cmd.none )
 
 
-view : String -> Html a
+view : Model -> Html Msg
 view model =
-    text ("Hello " ++ model ++ "!")
+    div []
+        [ startGameButton ]
+
+
+startGameButton : Html Msg
+startGameButton =
+    button [ class "btn btn-primary" ] [ text "Start a new game" ]
