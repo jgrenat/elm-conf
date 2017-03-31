@@ -1,23 +1,41 @@
 module Main exposing (..)
 
-import Html exposing (beginnerProgram, text, Html)
+import Html exposing (Html, button, div, h1, p, program, text)
+import Html.Events exposing (onClick)
 
 
-main : Program Never String a
+triesNumber : Int
+triesNumber =
+    6
+
+
+main : Program Never Model Msg
 main =
-    beginnerProgram { model = model, view = view, update = update }
+    program { init = init, view = view, update = update, subscriptions = (\m -> Sub.none) }
 
 
-model : String
-model =
-    "Devoxx"
+type alias Model =
+    {}
 
 
-update : a -> String -> String
+type Msg
+    = None
+
+
+init =
+    ( {}, Cmd.none )
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model
+    ( model, Cmd.none )
 
 
-view : String -> Html a
+view : Model -> Html Msg
 view model =
-    text ("Hello " ++ model ++ "!")
+    div []
+        [ h1 [] [ text "Guess The Number" ]
+        , p []
+            [ text <| "You have " ++ (toString triesNumber) ++ " tries to guess a number. Are you ready?" ]
+        , button [] [ text "Start Game" ]
+        ]
